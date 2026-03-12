@@ -1,27 +1,33 @@
-
-
 const URL = 'http://localhost:5678/api/';
 const gallery = document.getElementById('gallery-container');
 const filterContainer = document.getElementById('filter-container');
+const token = sessionStorage.getItem("token");
 
 let projets = [];
 
-fetch(URL + 'works') 
-    .then(response => response.json())
-    .then(works => {
-        projets = works;      
-        afficherProjets(projets);
-    })
-    .catch(error => console.error('Erreur:', error));
+function getProjets() {
+    fetch(URL + 'works')
+        .then(response => response.json())
+        .then(works => {
+            projets = works;
+            afficherProjets(projets);
+        })
+        .catch(error => console.error('Erreur:', error));
+}
+getProjets();
 
-fetch(URL + 'categories')
-    .then(response => response.json())
-    .then(categories => creerBoutonsFiltres(categories)) // on crée les boutons de filtre après avoir récupéré les catégories
-    .catch(error => console.error('Erreur fetch catégories:', error));
+function getCategories() {
+    fetch(URL + 'categories')
+        .then(response => response.json())
+        .then(categories => creerBoutonsFiltres(categories)) 
+        // on crée les boutons de filtre après avoir récupéré les catégories
+        .catch(error => console.error('Erreur fetch catégories:', error));
+}
+getCategories();
 
 function afficherProjets(projets) {
-    
-    gallery.innerHTML = ''; 
+
+    gallery.innerHTML = '';
     projets.forEach(projet => {
         const figure = document.createElement('figure');
         const img = document.createElement('img');
@@ -34,10 +40,8 @@ function afficherProjets(projets) {
         figure.appendChild(img);
         figure.appendChild(caption);
         gallery.appendChild(figure);
-        });
-    }
-    
-
+    });
+}
 
 
 //Fonction pour créer les boutons de filtre
@@ -57,5 +61,26 @@ function creerBoutonsFiltres(categories) {
             afficherProjets(projetsFiltres);
         });
         filterContainer.appendChild(button);
+    });
+}
+
+//Mode édition
+const editionBar = document.getElementById('edition-bar');
+const loginLink = document.querySelector('nav ul li:nth-child(3)');
+
+if (token) {
+    // Affiche la barre noire
+    editionBar.style.display = "block";
+
+    // Change "login" en "logout"
+    loginLink.textContent = "logout";
+
+    // Cache les filtres
+    filterContainer.style.display = "none";
+
+    // Déconnexion
+    loginLink.addEventListener("click", () => {
+        sessionStorage.removeItem("token");
+        window.location.reload();
     });
 }

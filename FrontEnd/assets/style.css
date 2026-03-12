@@ -57,6 +57,7 @@ header {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
+	
 }
 section {
 	margin: 50px 0
@@ -93,6 +94,10 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 li:hover {
@@ -211,7 +216,7 @@ footer nav ul {
 	margin: 2em
 }
 
-/** page login **/
+/** Page login **/
 
 .forgot-password {
 	margin-top: 10px;
@@ -230,3 +235,24 @@ footer nav ul {
 	margin-top: 10px;
 	font-size: 14px;
 }
+
+/* Edition bar */
+
+#edition-bar {
+	display: none;
+	/* cachée par défaut */
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding: 10px;
+	font-weight: bold;
+	position: fixed;
+	/* pour qu’elle reste en haut quand on scroll */
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	/* pour qu’elle soit au-dessus de tout */
+}
+
+

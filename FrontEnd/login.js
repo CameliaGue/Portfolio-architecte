@@ -19,7 +19,7 @@ loginForm.addEventListener('submit', function (event) {
         })
         .then(data => {
             // Stocke le token pour la session
-            localStorage.setItem('token', data.token);
+            sessionStorage.setItem('token', data.token);
 
             // Redirection vers la page d'accueil
             window.location.href = 'index.html';
