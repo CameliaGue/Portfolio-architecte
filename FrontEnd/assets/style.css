@@ -253,6 +253,69 @@ footer nav ul {
 	width: 100%;
 	z-index: 1000;
 	/* pour qu’elle soit au-dessus de tout */
+	cursor: pointer;
 }
 
+.hidden {
+	display: none;
+}
 
+/* MODALE */
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 40px 20px;
+	overflow-y: auto;
+	z-index: 2000;
+}
+
+.modal.hidden {
+	display: none;
+}
+
+.modal-wrapper {
+	background-color: white;
+	padding: 20px;
+	width: 100%;
+	max-width: 700px;
+	border-radius: 10px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.modal-gallery {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.modal-gallery figure {
+	flex: 1 1 calc(33% - 10px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal-gallery img {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.delete-button {
+	margin-top: 5px;
+	background-color: #B1663C;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}

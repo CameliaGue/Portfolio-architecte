@@ -84,3 +84,49 @@ if (token) {
         window.location.reload();
     });
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const editionBar = document.getElementById('edition-bar');
+    const modal = document.getElementById('modal');
+    const modalGallery = document.getElementById('modal-gallery');
+    const closeModalButtons = document.querySelectorAll('.close-modal');
+
+    // Affiche les projets dynamiquement dans la modale
+    function afficherProjetsModale(projets) {
+        modalGallery.innerHTML = '';
+        projets.forEach(projet => {
+            const figure = document.createElement('figure');
+
+            const img = document.createElement('img');
+            img.src = projet.imageUrl;
+            img.alt = projet.title;
+
+            const caption = document.createElement('figcaption');
+            caption.textContent = projet.title;
+
+            figure.appendChild(img);
+            figure.appendChild(caption);
+
+            // Bouton supprimer (optionnel)
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Supprimer';
+            deleteButton.classList.add('delete-button');
+            deleteButton.addEventListener('click', () => figure.remove());
+            figure.appendChild(deleteButton);
+
+            modalGallery.appendChild(figure);
+        });
+    }
+
+    // Clic sur Mode édition → ouvre modale
+    editionBar.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        afficherProjetsModale(projets); // projets déjà récupérés via getProjets()
+    });
+
+    // Clic sur croix → ferme modale
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => modal.classList.add('hidden'));
+    });
+});
