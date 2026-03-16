@@ -85,7 +85,7 @@ if (token) {
     });
 }
 
-
+    // Modale d'édition
 document.addEventListener('DOMContentLoaded', () => {
     const editionBar = document.getElementById('edition-bar');
     const modal = document.getElementById('modal');
@@ -102,15 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = projet.imageUrl;
             img.alt = projet.title;
 
-            const caption = document.createElement('figcaption');
-            caption.textContent = projet.title;
-
             figure.appendChild(img);
-            figure.appendChild(caption);
 
-            // Bouton supprimer (optionnel)
+            // bouton corbeille pour supprimer
             const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Supprimer';
+            deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
             deleteButton.classList.add('delete-button');
             deleteButton.addEventListener('click', () => figure.remove());
             figure.appendChild(deleteButton);
@@ -122,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clic sur Mode édition → ouvre modale
     editionBar.addEventListener('click', () => {
         modal.classList.remove('hidden');
-        afficherProjetsModale(projets); // projets déjà récupérés via getProjets()
+        afficherProjetsModale(projets);
     });
 
     // Clic sur croix → ferme modale

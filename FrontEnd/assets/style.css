@@ -281,6 +281,8 @@ footer nav ul {
 }
 
 .modal-wrapper {
+	position: relative;
+	/* pour placer la croix */
 	background-color: white;
 	padding: 20px;
 	width: 100%;
@@ -289,33 +291,69 @@ footer nav ul {
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 15px;
 }
 
-.modal-gallery {
+/* CROIX fermeture */
+.modal-wrapper .close-modal {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 30px;
+	height: 30px;
+	font-size: 16px;
+	cursor: pointer;
 	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-}
-
-.modal-gallery figure {
-	flex: 1 1 calc(33% - 10px);
-	display: flex;
-	flex-direction: column;
+	justify-content: center;
 	align-items: center;
+}
+
+/* Titre de la modale centré sous la croix */
+.modal-wrapper h2 {
+	text-align: center;
+	color: black;
+	padding-top: 40px;
+	font-size: 25px;
+	font-family: 'Work Sans';
+}
+
+/* GALERIE */
+.modal-gallery {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 10px;
+	margin: 60px;
+}
+
+/* petites vignettes */
+.modal-gallery figure {
+	height: 160px;
+	overflow: hidden;
+	position: relative;
 }
 
 .modal-gallery img {
 	width: 100%;
-	border-radius: 5px;
+	height: 100%;
+	object-fit: cover;
+	/* recadrage en mode "pellicule" */
 }
 
-.delete-button {
-	margin-top: 5px;
-	background-color: #B1663C;
+/* BOUTON SUPPRIMER -> icône corbeille */
+.modal-gallery .delete-button {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background-color: black;
 	color: white;
 	border: none;
-	padding: 5px 10px;
 	border-radius: 5px;
+	width: 20px;
+	height: 21px;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
 }
+
