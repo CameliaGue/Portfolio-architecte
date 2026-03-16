@@ -2,6 +2,9 @@ const URL = 'http://localhost:5678/api/';
 const gallery = document.getElementById('gallery-container');
 const filterContainer = document.getElementById('filter-container');
 const token = sessionStorage.getItem("token");
+const modal = document.getElementById('modal');
+const modalGallery = document.getElementById('modal-gallery');
+const modifierBtn = document.getElementById('modifier-projets');
 
 let projets = [];
 
@@ -19,14 +22,12 @@ getProjets();
 function getCategories() {
     fetch(URL + 'categories')
         .then(response => response.json())
-        .then(categories => creerBoutonsFiltres(categories)) 
-        // on crée les boutons de filtre après avoir récupéré les catégories
+        .then(categories => creerBoutonsFiltres(categories))
         .catch(error => console.error('Erreur fetch catégories:', error));
 }
 getCategories();
 
 function afficherProjets(projets) {
-
     gallery.innerHTML = '';
     projets.forEach(projet => {
         const figure = document.createElement('figure');
@@ -43,16 +44,33 @@ function afficherProjets(projets) {
     });
 }
 
+function afficherProjetsModale(projets) {
+    modalGallery.innerHTML = '';
+    projets.forEach(projet => {
+        const figure = document.createElement('figure');
 
-//Fonction pour créer les boutons de filtre
+        const img = document.createElement('img');
+        img.src = projet.imageUrl;
+        img.alt = projet.title;
+
+        figure.appendChild(img);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+        deleteButton.classList.add('delete-button');
+        deleteButton.addEventListener('click', () => figure.remove());
+        figure.appendChild(deleteButton);
+
+        modalGallery.appendChild(figure);
+    });
+}
+
 function creerBoutonsFiltres(categories) {
-    // Bouton "Tous"
     const tousButton = document.createElement('button');
     tousButton.textContent = 'Tous';
     tousButton.addEventListener('click', () => afficherProjets(projets));
     filterContainer.appendChild(tousButton);
 
-    // Boutons par catégorie
     categories.forEach(category => {
         const button = document.createElement('button');
         button.textContent = category.name;
@@ -64,65 +82,29 @@ function creerBoutonsFiltres(categories) {
     });
 }
 
-//Mode édition
+// Mode édition
 const editionBar = document.getElementById('edition-bar');
 const loginLink = document.querySelector('nav ul li:nth-child(3)');
 
 if (token) {
-    // Affiche la barre noire
     editionBar.style.display = "block";
-
-    // Change "login" en "logout"
+    modifierBtn.style.display = "block";
+    document.getElementById('portfolio-header').style.paddingBottom = "80px";
     loginLink.textContent = "logout";
-
-    // Cache les filtres
     filterContainer.style.display = "none";
-
-    // Déconnexion
     loginLink.addEventListener("click", () => {
         sessionStorage.removeItem("token");
         window.location.reload();
     });
 }
 
-    // Modale d'édition
-document.addEventListener('DOMContentLoaded', () => {
-    const editionBar = document.getElementById('edition-bar');
-    const modal = document.getElementById('modal');
-    const modalGallery = document.getElementById('modal-gallery');
-    const closeModalButtons = document.querySelectorAll('.close-modal');
+// Ouverture modale via bouton Modifier
+modifierBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    afficherProjetsModale(projets);
+});
 
-    // Affiche les projets dynamiquement dans la modale
-    function afficherProjetsModale(projets) {
-        modalGallery.innerHTML = '';
-        projets.forEach(projet => {
-            const figure = document.createElement('figure');
-
-            const img = document.createElement('img');
-            img.src = projet.imageUrl;
-            img.alt = projet.title;
-
-            figure.appendChild(img);
-
-            // bouton corbeille pour supprimer
-            const deleteButton = document.createElement('button');
-            deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-            deleteButton.classList.add('delete-button');
-            deleteButton.addEventListener('click', () => figure.remove());
-            figure.appendChild(deleteButton);
-
-            modalGallery.appendChild(figure);
-        });
-    }
-
-    // Clic sur Mode édition → ouvre modale
-    editionBar.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        afficherProjetsModale(projets);
-    });
-
-    // Clic sur croix → ferme modale
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', () => modal.classList.add('hidden'));
-    });
+// Fermeture modale
+document.querySelectorAll('.close-modal').forEach(button => {
+    button.addEventListener('click', () => modal.classList.add('hidden'));
 });
