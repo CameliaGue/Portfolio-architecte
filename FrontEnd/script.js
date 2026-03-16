@@ -92,19 +92,22 @@ if (token) {
     document.getElementById('portfolio-header').style.paddingBottom = "80px";
     loginLink.textContent = "logout";
     filterContainer.style.display = "none";
+
     loginLink.addEventListener("click", () => {
         sessionStorage.removeItem("token");
         window.location.reload();
     });
 }
 
-// Ouverture modale via bouton Modifier
+//Creer une fonction plutot pour pouvoir ouvrir la 2eme modale? 
+
+// Ouverture modale via bouton Modifier   
 modifierBtn.addEventListener('click', () => {
     modal.classList.remove('hidden');
     afficherProjetsModale(projets);
 });
 
 // Fermeture modale
-document.querySelectorAll('.close-modal').forEach(button => {
-    button.addEventListener('click', () => modal.classList.add('hidden'));
+document.querySelector('.close-modal').addEventListener('click', () => {
+    modal.classList.add('hidden');
 });

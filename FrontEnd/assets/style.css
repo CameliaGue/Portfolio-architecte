@@ -319,32 +319,31 @@ nav li {
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	width: 30px;
-	height: 30px;
-	font-size: 16px;
 	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	background: none;
+	border: none;
+	font-size: 20px;
+	color: black;
+	margin: 20px;
 }
 
 /* Titre de la modale centré sous la croix */
 .modal-wrapper h2 {
 	text-align: center;
 	color: black;
-	padding-top: 40px;
+	padding: 40px 0 20px 0;
 	font-size: 25px;
-	font-family: 'Work Sans';
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 400;
 }
 
 /* Galerie */
 .modal-gallery {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	gap: 10px;
-	margin: 20px 60px 0 60px;
+	gap: 40px 10px;
+	margin: 20px 90px 0 90px;
 }
-
 /* Petites vignettes */
 .modal-gallery figure {
 	height: 140px;
@@ -375,3 +374,22 @@ nav li {
 	cursor: pointer;
 }
 
+#open-add-photo {
+	display: block;
+	margin: 0 auto;
+	padding: 15px 30px;
+	background-color: #1D6154;
+	color: white;
+	border: none;
+	border-radius: 60px;
+	font-family: 'Syne', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.modal-separator {
+	border: none;
+	border-top: 2px solid #ccc;
+	margin: 70px 80px 30px 150px;
+}
