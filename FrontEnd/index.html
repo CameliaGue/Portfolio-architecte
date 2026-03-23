@@ -61,7 +61,6 @@
 			<div class="gallery" id="gallery-container"></div>
 		</section>
 
-		</section>
 		<section id="contact">
 			<h2 id="contact-anchor">Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
@@ -85,13 +84,31 @@
 		</nav>
 	</footer>
 	
+	<!-- Modale d'édition (cachée par défaut) -->
 <div id="modal" class="modal hidden">
 	<div class="modal-wrapper">
 		<button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
-		<h2>Galerie photo</h2>
-		<div id="modal-gallery" class="modal-gallery"></div>
-		<hr class="modal-separator">
-		<button id="open-add-photo">Ajouter une photo</button>
+
+		<!-- Section 1 : Galerie -->
+		<section id="modal-section-galerie">
+			<h2>Galerie photo</h2>
+			<article>
+				<div id="modal-gallery" class="modal-gallery"></div>
+			</article>
+			<hr class="modal-separator">
+			<button id="open-add-photo">Ajouter une photo</button>
+		</section>
+
+		<!-- Section 2 : Ajout photo (cachée par défaut) -->
+		<section id="modal-section-ajout" class="hidden">
+			<h2>Ajout photo</h2>
+			<article>
+				<!-- contenu ajout photo à venir -->
+			</article>
+			<hr class="modal-separator">
+			<button id="back-to-galerie">← Retour</button>
+		</section>
+
 	</div>
 </div>
 

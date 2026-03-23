@@ -208,6 +208,11 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #0E2F28;
 }
 
 footer nav ul {

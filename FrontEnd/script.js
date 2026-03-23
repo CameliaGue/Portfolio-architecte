@@ -34,10 +34,8 @@ function afficherProjets(projets) {
         const img = document.createElement('img');
         img.src = projet.imageUrl;
         img.alt = projet.title;
-
         const caption = document.createElement('figcaption');
         caption.textContent = projet.title;
-
         figure.appendChild(img);
         figure.appendChild(caption);
         gallery.appendChild(figure);
@@ -48,19 +46,34 @@ function afficherProjetsModale(projets) {
     modalGallery.innerHTML = '';
     projets.forEach(projet => {
         const figure = document.createElement('figure');
-
         const img = document.createElement('img');
         img.src = projet.imageUrl;
         img.alt = projet.title;
-
         figure.appendChild(img);
 
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
         deleteButton.classList.add('delete-button');
-        deleteButton.addEventListener('click', () => figure.remove());
-        figure.appendChild(deleteButton);
+        deleteButton.addEventListener('click', () => {
+            fetch(URL + 'works/' + projet.id, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(response => {
+                    if (response.status === 204) {
+                        projets = projets.filter(p => p.id !== projet.id);
+                        afficherProjets(projets);
+                        afficherProjetsModale(projets);
+                    } else {
+                        console.error('Erreur lors de la suppression');
+                    }
+                })
+                .catch(error => console.error('Erreur:', error));
+        });
 
+        figure.appendChild(deleteButton);
         modalGallery.appendChild(figure);
     });
 }
@@ -70,7 +83,6 @@ function creerBoutonsFiltres(categories) {
     tousButton.textContent = 'Tous';
     tousButton.addEventListener('click', () => afficherProjets(projets));
     filterContainer.appendChild(tousButton);
-
     categories.forEach(category => {
         const button = document.createElement('button');
         button.textContent = category.name;
@@ -93,21 +105,31 @@ if (token) {
     loginLink.textContent = "logout";
     filterContainer.style.display = "none";
 
+    // Ouverture modale via bouton Modifier (sécurisé)
+    modifierBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        afficherProjetsModale(projets);
+    });
+
+    // Déconnexion sans reload
     loginLink.addEventListener("click", () => {
         sessionStorage.removeItem("token");
-        window.location.reload();
+        editionBar.style.display = "none";
+        modifierBtn.style.display = "none";
+        filterContainer.style.display = "flex";
+        loginLink.innerHTML = '<a href="login.html">login</a>';
+        document.getElementById('portfolio-header').style.paddingBottom = "0px";
     });
 }
 
-//Creer une fonction plutot pour pouvoir ouvrir la 2eme modale? 
-
-// Ouverture modale via bouton Modifier   
-modifierBtn.addEventListener('click', () => {
-    modal.classList.remove('hidden');
-    afficherProjetsModale(projets);
-});
-
-// Fermeture modale
+// Fermeture modale croix
 document.querySelector('.close-modal').addEventListener('click', () => {
     modal.classList.add('hidden');
+});
+
+// Fermeture modale overlay
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.add('hidden');
+    }
 });
