@@ -17,9 +17,10 @@
 
 
 <body>
-<div id="edition-bar">
-	<i class="fa-regular fa-pen-to-square"></i></i> Mode édition
-</div>
+	<div id="edition-bar">
+		<i class="fa-regular fa-pen-to-square"></i> Mode édition
+	</div>
+
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
@@ -31,9 +32,8 @@
 			</ul>
 		</nav>
 	</header>
-	<main>
-			
 
+	<main>
 		<section id="introduction">
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">
@@ -84,7 +84,8 @@
 		</nav>
 	</footer>
 	
-	<!-- Modale d'édition (cachée par défaut) -->
+	
+	<!-- Modale d'édition -->
 <div id="modal" class="modal hidden">
 	<div class="modal-wrapper">
 		<button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
@@ -99,14 +100,24 @@
 			<button id="open-add-photo">Ajouter une photo</button>
 		</section>
 
-		<!-- Section 2 : Ajout photo (cachée par défaut) -->
+		<!-- Section 2 : Ajout photo -->
 		<section id="modal-section-ajout" class="hidden">
+			<button id="back-to-galerie"><i class="fa-solid fa-arrow-left"></i></button>
 			<h2>Ajout photo</h2>
 			<article>
-				<!-- contenu ajout photo à venir -->
+				<div id="photo-upload-zone">
+					<i class="fa-regular fa-image"></i>
+					<label for="photo-input">+ Ajouter photo</label>
+					<input type="file" id="photo-input" accept=".jpg,.png" class="hidden">
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<label for="titre-input">Titre</label>
+				<input type="text" id="titre-input">
+				<label for="categorie-input">Catégorie</label>
+				<select id="categorie-input"></select>
+				<hr class="modal-separator">
+				<button id="valider-ajout">Valider</button>
 			</article>
-			<hr class="modal-separator">
-			<button id="back-to-galerie">← Retour</button>
 		</section>
 
 	</div>
