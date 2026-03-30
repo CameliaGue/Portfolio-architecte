@@ -190,9 +190,9 @@ function validerFormulaire() {
             }
         })
         .then(nouveauProjet => {
-            projets.push(nouveauProjet); // ajout du nouveau projet au tableau global
-            afficherProjets(projets); // mise à jour de la galerie principale
-            afficherProjetsModale(projets); // mise à jour de la modale
+            projets.push(nouveauProjet);
+            afficherProjets(projets);
+            afficherProjetsModale(projets);
 
             // Réinitialisation du formulaire
             document.getElementById('titre-input').value = '';

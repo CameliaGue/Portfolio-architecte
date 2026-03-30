@@ -107,11 +107,6 @@ nav ul {
 
 }
 
-nav li {
-	padding: 0 10px;
-	font-size: 1.2em;
-}
-
 a {
 	text-decoration: none;
 	color: inherit;
@@ -254,6 +249,7 @@ footer nav ul {
 
 }
 
+
 /* Page login */
 
 .forgot-password {
@@ -295,6 +291,8 @@ footer nav ul {
 
 nav li {
 	cursor: pointer;
+	padding: 0 10px;
+	font-size: 1.2em;
 }
 
 .hidden {
