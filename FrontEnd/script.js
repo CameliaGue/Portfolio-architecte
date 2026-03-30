@@ -25,7 +25,7 @@ function afficherSectionAjout() {
 
 // Récupération des projets depuis l'API
 function getProjets() {
-    fetch(URL + 'works') // appel API pour récupérer tous les projets
+    return fetch(URL + 'works') // appel API pour récupérer tous les projets
         .then(response => response.json()) // conversion de la réponse en JSON
         .then(works => {
             projets = works; // stockage global des projets
@@ -53,6 +53,7 @@ function afficherProjets(projets) {
 
     projets.forEach(projet => {
         const figure = document.createElement('figure');
+        figure.dataset.id = projet.id;
 
         const img = document.createElement('img');
         img.src = projet.imageUrl; // image du projet
@@ -69,11 +70,12 @@ function afficherProjets(projets) {
 }
 
 // Affichage des projets dans la modale d’édition avec possibilité de suppression
-function afficherProjetsModale(projets) {
+function afficherProjetsModale(projets) {   
     modalGallery.innerHTML = ''; // reset du contenu de la modale
 
     projets.forEach(projet => {
         const figure = document.createElement('figure');
+        figure.dataset.id = projet.id;
 
         const img = document.createElement('img');
         img.src = projet.imageUrl;
@@ -91,23 +93,21 @@ function afficherProjetsModale(projets) {
                     'Authorization': 'Bearer ' + token
                 }
             })
-                .then(response => {   // vérification de la réponse
-
-                    if (response.status === 204) {  //no content 
-                        // Retire le projet supprimé du tableau global
-                        projets = projets.filter(p => p.id !== projet.id);
-                        afficherProjets(projets); // met à jour la galerie principale
-                        afficherProjetsModale(projets); // met à jour la modale
+                .then(response => {
+                    if (response.status === 204) {
+                        figure.remove();
+                        const figureGalerie = gallery.querySelector(`figure[data-id="${projet.id}"]`);
+                        figureGalerie.remove();
                     } else {
                         console.error('Erreur lors de la suppression');
                     }
                 })
                 .catch(error => console.error('Erreur:', error));
         });
-
         figure.appendChild(deleteButton);
+
         modalGallery.appendChild(figure);
-    });
+    });         
 }
 
 // Création des boutons de filtre par catégorie
@@ -227,7 +227,7 @@ function gererPreview(e) {
                 <img src="${event.target.result}" style="width: 100%; max-height: 200px; object-fit: contain;">
                 <input type="file" id="photo-input" accept=".jpg,.png" class="hidden">
             `;
-            
+
             // Recrée l’input pour permettre de changer l’image
             const newInput = document.getElementById('photo-input');
             const dataTransfer = new DataTransfer();
@@ -253,7 +253,7 @@ if (token) {
     // Ouverture de la modale d’édition
     modifierBtn.addEventListener('click', () => {
         modal.classList.remove('hidden');
-        afficherProjetsModale(projets);
+        getProjets().then(() => afficherProjetsModale(projets));
         afficherSectionGalerie();
     });
 
