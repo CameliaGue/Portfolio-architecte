@@ -10,38 +10,34 @@ let projets = [];
 
 // Navigation entre les sections Galerie et Ajout dans la modale
 function afficherSectionGalerie() {
-    // Affiche la galerie dans la modale
     document.getElementById('modal-section-galerie').classList.remove('hidden');
-    // Cache la section ajout
     document.getElementById('modal-section-ajout').classList.add('hidden');
 }
 
 function afficherSectionAjout() {
-    // Cache la galerie
     document.getElementById('modal-section-galerie').classList.add('hidden');
-    // Affiche le formulaire d'ajout
     document.getElementById('modal-section-ajout').classList.remove('hidden');
 }
 
 // Récupération des projets depuis l'API
 function getProjets() {
-    return fetch(URL + 'works') // appel API pour récupérer tous les projets
-        .then(response => response.json()) // conversion de la réponse en JSON
+    return fetch(URL + 'works') 
+        .then(response => response.json()) 
         .then(works => {
-            projets = works; // stockage global des projets
-            afficherProjets(projets); // affichage dans la galerie principale
+            projets = works; 
+            afficherProjets(projets); 
         })
         .catch(error => console.error('Erreur:', error));
 }
-getProjets(); // appel immédiat au chargement de la page
+getProjets(); 
 
 // Récupération des catégories depuis l'API
 function getCategories() {
     fetch(URL + 'categories')
         .then(response => response.json())
         .then(categories => {
-            creerBoutonsFiltres(categories); // création des boutons de filtre
-            remplirSelectCategories(categories); // remplissage du select dans le formulaire
+            creerBoutonsFiltres(categories); 
+            remplirSelectCategories(categories); 
         })
         .catch(error => console.error('Erreur fetch catégories:', error));
 }
@@ -49,18 +45,18 @@ getCategories();
 
 // Affichage des projets dans la galerie principale
 function afficherProjets(projets) {
-    gallery.innerHTML = ''; // reset du contenu de la galerie
+    gallery.innerHTML = '';
 
     projets.forEach(projet => {
         const figure = document.createElement('figure');
         figure.dataset.id = projet.id;
 
         const img = document.createElement('img');
-        img.src = projet.imageUrl; // image du projet
+        img.src = projet.imageUrl; 
         img.alt = projet.title;
 
         const caption = document.createElement('figcaption');
-        caption.textContent = projet.title; // titre du projet
+        caption.textContent = projet.title;
 
         figure.appendChild(img);
         figure.appendChild(caption);
@@ -71,7 +67,7 @@ function afficherProjets(projets) {
 
 // Affichage des projets dans la modale d’édition avec possibilité de suppression
 function afficherProjetsModale(projets) {   
-    modalGallery.innerHTML = ''; // reset du contenu de la modale
+    modalGallery.innerHTML = '';
 
     projets.forEach(projet => {
         const figure = document.createElement('figure');
@@ -87,7 +83,7 @@ function afficherProjetsModale(projets) {
         deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
         deleteButton.classList.add('delete-button');
         deleteButton.addEventListener('click', () => {
-            fetch(URL + 'works/' + projet.id, {   // appel API pour supprimer le projet
+            fetch(URL + 'works/' + projet.id, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -120,7 +116,6 @@ function creerBoutonsFiltres(categories) {
     categories.forEach(category => {
         const button = document.createElement('button');
         button.textContent = category.name;
-        // Filtrage des projets selon la catégorie
         button.addEventListener('click', () => {
             const projetsFiltres = projets.filter(p => p.categoryId === category.id);
             afficherProjets(projetsFiltres);
@@ -169,7 +164,7 @@ function validerFormulaire() {
     errorMsg.textContent = '';
 
     // Préparation des données pour l’API
-    const formData = new FormData();  // utilisation de FormData pour envoyer le fichier via fetch
+    const formData = new FormData();
     formData.append('title', titre);
     formData.append('category', categorie);
     formData.append('image', photoFile);
@@ -206,7 +201,7 @@ function validerFormulaire() {
             // Ré-attache le listener sur le nouvel input et gère l’aperçu de la photo sélectionnée
             document.getElementById('photo-input').addEventListener('change', gererPreview);
 
-            afficherSectionGalerie(); // retour à la galerie
+            afficherSectionGalerie();
         })
         .catch(error => {
             errorMsg.textContent = 'Une erreur est survenue, veuillez réessayer.';
@@ -216,13 +211,12 @@ function validerFormulaire() {
 
 // Gestion de l’aperçu de la photo sélectionnée
 function gererPreview(e) { 
-    const file = e.target.files[0]; // récupération du fichier sélectionné
+    const file = e.target.files[0];
 
-    if (file) {  // vérification qu’un fichier a bien été sélectionné
+    if (file) { 
         const reader = new FileReader();
-        reader.onload = (event) => {  // récupération du résultat de la lecture du fichier
+        reader.onload = (event) => {  
             const uploadZone = document.getElementById('photo-upload-zone');
-            // Affiche un aperçu de l’image
             uploadZone.innerHTML = `
                 <img src="${event.target.result}" style="width: 100%; max-height: 200px; object-fit: contain;">
                 <input type="file" id="photo-input" accept=".jpg,.png" class="hidden">

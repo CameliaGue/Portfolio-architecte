@@ -35,8 +35,6 @@ body {
 	background-color: #FFFEF8;
 }
 
-
-
 ol,
 ul {
 	list-style: none;
@@ -249,7 +247,6 @@ footer nav ul {
 
 }
 
-
 /* Page login */
 
 .forgot-password {
@@ -274,19 +271,16 @@ footer nav ul {
 
 #edition-bar {
 	display: none;
-	/* cachée par défaut */
 	background-color: black;
 	color: white;
 	text-align: center;
 	padding: 10px;
 	font-weight: bold;
 	position: fixed;
-	/* pour qu’elle reste en haut quand on scroll */
 	top: 0;
 	left: 0;
 	width: 100%;
 	z-index: 1000;
-	/* pour qu’elle soit au-dessus de tout */
 }
 
 nav li {
@@ -338,7 +332,6 @@ nav li {
 
 .modal-wrapper {
 	position: relative;
-	/* pour placer la croix */
 	background-color: white;
 	padding: 20px;
 	width: 100%;
@@ -350,7 +343,7 @@ nav li {
 	gap: 15px;
 }
 
-/* CROIX fermeture */
+/* Croix fermeture */
 .modal-wrapper .close-modal {
 	position: absolute;
 	top: 10px;
@@ -498,7 +491,6 @@ nav li {
 	font-weight: 700;
 	font-size: 14px;
 	cursor: pointer;
-
 }
 
 #valider-ajout:hover {

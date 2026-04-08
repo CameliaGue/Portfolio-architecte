@@ -14,12 +14,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-
-
 <body>
 	<div id="edition-bar">
 		<i class="fa-regular fa-pen-to-square"></i> Mode édition
-	</div>
+	</div>  <!-- Barre d'édition, visible uniquement pour les utilisateurs connectés -->
 
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -57,8 +55,9 @@
 					<i class="fa-regular fa-pen-to-square"></i> modifier
 				</div>
 			</div>
-			<div class="filter" id="filter-container"></div>
-			<div class="gallery" id="gallery-container"></div>
+
+			<div class="filter" id="filter-container"></div>  <!-- Conteneur pour les boutons de filtre, générés dynamiquement -->	
+			<div class="gallery" id="gallery-container"></div> <!-- Conteneur pour la galerie de projets, généré dynamiquement -->
 		</section>
 
 		<section id="contact">
@@ -86,42 +85,46 @@
 	
 	
 	<!-- Modale d'édition -->
-<div id="modal" class="modal hidden">
-	<div class="modal-wrapper">
-		<button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+	<div id="modal" class="modal hidden">
+		<div class="modal-wrapper">
+			<button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
 
-		<!-- Section 1 : Galerie -->
-		<section id="modal-section-galerie">
-			<h2>Galerie photo</h2>
-			<article>
-				<div id="modal-gallery" class="modal-gallery"></div>
-			</article>
-			<hr class="modal-separator">
-			<button id="open-add-photo">Ajouter une photo</button>
-		</section>
+			<!-- Section 1 : Galerie -->
+			<section id="modal-section-galerie">
+				<h2>Galerie photo</h2>
 
-		<!-- Section 2 : Ajout photo -->
-		<section id="modal-section-ajout" class="hidden">
-			<button id="back-to-galerie"><i class="fa-solid fa-arrow-left"></i></button>
-			<h2>Ajout photo</h2>
-			<article>
-				<div id="photo-upload-zone">
-					<i class="fa-regular fa-image"></i>
-					<label for="photo-input">+ Ajouter photo</label>
-					<input type="file" id="photo-input" accept=".jpg,.png" class="hidden">
-					<p>jpg, png : 4mo max</p>
-				</div>
-				<label for="titre-input">Titre</label>
-				<input type="text" id="titre-input">
-				<label for="categorie-input">Catégorie</label>
-				<select id="categorie-input"></select>
+				<article>
+					<div id="modal-gallery" class="modal-gallery"></div>
+				</article>
+
 				<hr class="modal-separator">
-				<button id="valider-ajout">Valider</button>
-			</article>
-		</section>
+				<button id="open-add-photo">Ajouter une photo</button>
+			</section>
 
+			<!-- Section 2 : Ajout photo -->
+			<section id="modal-section-ajout" class="hidden">
+				<button id="back-to-galerie"><i class="fa-solid fa-arrow-left"></i></button>
+				<h2>Ajout photo</h2>
+
+				<article>
+					<div id="photo-upload-zone">
+						<i class="fa-regular fa-image"></i>
+						<label for="photo-input">+ Ajouter photo</label>
+						<input type="file" id="photo-input" accept=".jpg,.png" class="hidden">
+						<p>jpg, png : 4mo max</p>
+					</div>
+
+					<label for="titre-input">Titre</label>
+					<input type="text" id="titre-input">
+					<label for="categorie-input">Catégorie</label>
+					<select id="categorie-input"></select>
+					<hr class="modal-separator">
+					<button id="valider-ajout">Valider</button>
+				</article>
+
+			</section>
+		</div>
 	</div>
-</div>
 
 <script src="./script.js"></script>
 </body>
