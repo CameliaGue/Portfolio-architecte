@@ -1,11 +1,10 @@
 const loginForm = document.querySelector('form'); 
 
-
 loginForm.addEventListener('submit', function (event) {
     event.preventDefault(); 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    
+
 // Appel API pour tenter de se connecter avec les identifiants saisis
     fetch('http://localhost:5678/api/users/login', {
         method: 'POST',

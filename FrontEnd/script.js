@@ -47,9 +47,10 @@ getCategories();
 function afficherProjets(projets) {
     gallery.innerHTML = '';
 
-    projets.forEach(projet => {
+    projets.forEach(projet => { 
         const figure = document.createElement('figure');
-        figure.dataset.id = projet.id;
+        figure.dataset.id = projet.id; 
+        // stocke l’id du projet dans un attribut data-id pour pouvoir le retrouver facilement lors de la suppression dans la modale d’édition
 
         const img = document.createElement('img');
         img.src = projet.imageUrl; 
@@ -65,13 +66,14 @@ function afficherProjets(projets) {
     });
 }
 
-// Affichage des projets dans la modale d’édition avec possibilité de suppression
-function afficherProjetsModale(projets) {   
+// Affichage des projets galerie dans la modale d’édition avec bouton de suppression
+function afficherProjetsModale(projets) {  
     modalGallery.innerHTML = '';
 
     projets.forEach(projet => {
         const figure = document.createElement('figure');
-        figure.dataset.id = projet.id;
+        figure.dataset.id = projet.id; 
+        // stocke l’id du projet dans un attribut data-id pour pouvoir le retrouver facilement lors de la suppression
 
         const img = document.createElement('img');
         img.src = projet.imageUrl;
@@ -86,13 +88,14 @@ function afficherProjetsModale(projets) {
             fetch(URL + 'works/' + projet.id, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + token // indique que l’utilisateur est authentifié pour autoriser la suppression du projet
                 }
             })
                 .then(response => {
                     if (response.status === 204) {
                         figure.remove();
-                        const figureGalerie = gallery.querySelector(`figure[data-id="${projet.id}"]`);
+                        const figureGalerie = gallery.querySelector(`figure[data-id="${projet.id}"]`); 
+                        // recherche du projet dans la galerie principale grâce à son id stocké dans data-id
                         figureGalerie.remove();
                     } else {
                         console.error('Erreur lors de la suppression');
@@ -118,6 +121,7 @@ function creerBoutonsFiltres(categories) {
         button.textContent = category.name;
         button.addEventListener('click', () => {
             const projetsFiltres = projets.filter(p => p.categoryId === category.id);
+            // filtre les projets en fonction de la catégorie sélectionnée
             afficherProjets(projetsFiltres);
         });
         filterContainer.appendChild(button);
@@ -210,7 +214,7 @@ function validerFormulaire() {
 }
 
 // Gestion de l’aperçu de la photo sélectionnée
-function gererPreview(e) { 
+function gererPreview(e) {  
     const file = e.target.files[0];
 
     if (file) { 
@@ -219,10 +223,10 @@ function gererPreview(e) {
             const uploadZone = document.getElementById('photo-upload-zone');
             uploadZone.innerHTML = `
                 <img src="${event.target.result}" style="width: 100%; max-height: 200px; object-fit: contain;">
-                <input type="file" id="photo-input" accept=".jpg,.png" class="hidden">
-            `;
+                <input type="file" id="photo-input" accept=".jpg,.png" class="hidden">  
+            `; 
 
-            // Recrée l’input pour permettre de changer l’image
+            // Ré-attache le listener sur le nouvel input pour pouvoir changer la photo sélectionnée et mettre à jour l’aperçu
             const newInput = document.getElementById('photo-input');
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
@@ -231,6 +235,19 @@ function gererPreview(e) {
         };
         reader.readAsDataURL(file);
     }
+}
+
+// Fonction pour réinitialiser la zone d’ajout de photo après validation ou retour
+function resetUpload() {
+    document.getElementById('photo-upload-zone').innerHTML = `
+        <i class="fa-regular fa-image"></i>
+        <label for="photo-input">+ Ajouter photo</label>
+        <input type="file" id="photo-input" accept=".jpg,.png" class="hidden">
+        <p>jpg, png : 4mo max</p>
+    `;
+
+    document.getElementById('photo-input')
+        .addEventListener('change', gererPreview);
 }
 
 // Mode édition (affichage de la barre d’édition et bouton modifier)
@@ -272,12 +289,14 @@ document.getElementById('open-add-photo').addEventListener('click', () => {
 // Bouton retour, revient à la galerie
 document.getElementById('back-to-galerie').addEventListener('click', () => {
     afficherSectionGalerie();
+    resetUpload();
 });
 
 // Fermeture modale avec croix
 document.querySelector('.close-modal').addEventListener('click', () => {
     modal.classList.add('hidden');
     afficherSectionGalerie();
+    resetUpload();
 });
 
 // Fermeture modale en cliquant sur l’overlay
@@ -285,5 +304,6 @@ modal.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.classList.add('hidden');
         afficherSectionGalerie();
-    }
+        resetUpload();
+    }    
 });
